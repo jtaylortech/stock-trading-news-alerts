@@ -34,6 +34,9 @@ print(difference)
 diff_percent = (difference / float(yesterday_closing_price)) * 100
 print (diff_percent)
 
+# if the percent difference is greater than 5, ("Get News")
+if diff_percent > 5:
+    print("Get News")
 
 
 
