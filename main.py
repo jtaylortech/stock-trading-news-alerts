@@ -52,15 +52,16 @@ if diff_percent > 2:
     
     news_response = requests.get(NEWS_ENDPOINT, params=news_params)
     articles = news_response.json()["articles"]
-    print(articles)
+
 
 
 # using slice operator that creates a list that contains the first 3 articles 
 three_articles = articles[:3]
-print(three_articles)
 
 
-
+# creating a list of the first 3 article's headlines and descriptions using list comprehension
+formatted_articles = [f"Headline: {article['title']}. \n Brief: {article['description']}" for article in three_articles]
+print(formatted_articles)
 
 
 
