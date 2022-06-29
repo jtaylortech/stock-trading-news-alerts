@@ -1,3 +1,4 @@
+from multiprocessing.connection import Client
 from unittest.util import three_way_cmp
 import requests
 from access import *
@@ -5,12 +6,13 @@ from access import *
 STOCK_NAME = "MSFT"
 COMPANY_NAME = "Microsoft Corporation"
 
-STOCK_ENDPOINT = "https://www.alphavantage.co/query"
-STOCK_API_KEY = jt_stock_api
-
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
-NEWS_API_KEY = jt_news_api
+STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 
+NEWS_API_KEY = jt_news_api
+STOCK_API_KEY = jt_stock_api
+TWILIO_SID = jt_twilio_sid
+TWILIO_AUTH_TOKEN = jt_twilio_auth
 
 # getting yesterdays closing stock price
 stock_params = {
@@ -64,7 +66,15 @@ formatted_articles = [f"Headline: {article['title']}. \n Brief: {article['descri
 print(formatted_articles)
 
 
+# sending each article as a separate message via Twilio
+client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
 
+for article in formatted_articles:
+    message = client.message.create(
+        body=article,
+        from_="+18596517102",
+        to="+13143983570"
+    )
 
 
 
