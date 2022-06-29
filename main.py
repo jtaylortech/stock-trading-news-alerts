@@ -1,14 +1,16 @@
+from unittest.util import three_way_cmp
 import requests
 from access import *
 
-STOCK_NAME = "TSLA"
-COMPANY_NAME = "Tesla Inc"
+STOCK_NAME = "MSFT"
+COMPANY_NAME = "Microsoft Corporation"
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 STOCK_API_KEY = jt_stock_api
 
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
 NEWS_API_KEY = jt_news_api
+
 
 # getting yesterdays closing stock price
 stock_params = {
@@ -24,21 +26,25 @@ yesterday_data = data_list[0]
 yesterday_closing_price = yesterday_data["4. close"]
 print(yesterday_closing_price)
 
+
 # getting the day before yesterday's closing stock price 
 day_before_yesterday_data = data_list[1]
 day_before_yesterday_closing_price = day_before_yesterday_data["4. close"]
 print(day_before_yesterday_closing_price)
  
+
 # find the positive difference between the closing stock price on the previous two days
 difference = abs(float(yesterday_closing_price) - float(day_before_yesterday_closing_price))
 print(difference)
+
 
 # percentage difference between the closing price yesterday and day before 
 diff_percent = (difference / float(yesterday_closing_price)) * 100
 print (diff_percent)
 
+
 # if the percent difference is greater than 5, Get News articles using NewsAPI
-if diff_percent > 5:
+if diff_percent > 2:
     news_params = {
         "apiKey": NEWS_API_KEY,
         "qInTitle": COMPANY_NAME,
@@ -49,6 +55,9 @@ if diff_percent > 5:
     print(articles)
 
 
+# using slice operator that creates a list that contains the first 3 articles 
+three_articles = articles[:3]
+print(three_articles)
 
 
 
